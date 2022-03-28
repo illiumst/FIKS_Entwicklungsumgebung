@@ -47,7 +47,7 @@ class EnvMonitor(BaseCallback):
             self._read_info(env_idx, info)
 
         for env_idx, done in list(
-                enumerate(self.locals.get('dones', []))) + list(enumerate(self.locals.get('done', []))):
+                enumerate(self.locals.get('dones', []))): # + list(enumerate(self.locals.get('done', []))):
             self._read_done(env_idx, done)
         return True
 

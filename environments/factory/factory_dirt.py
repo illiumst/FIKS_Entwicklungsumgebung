@@ -198,19 +198,19 @@ class DirtFactory(BaseFactory):
 
     def step_hook(self) -> (List[dict], dict):
         super_reward_info = super().step_hook()
-        if smear_amount := self.dirt_prop.dirt_smear_amount:
-            for agent in self[c.AGENT]:
-                if agent.temp_valid and agent.last_pos != c.NO_POS:
-                    if self._actions.is_moving_action(agent.temp_action):
-                        if old_pos_dirt := self[c.DIRT].by_pos(agent.last_pos):
-                            if smeared_dirt := round(old_pos_dirt.amount * smear_amount, 2):
-                                old_pos_dirt.set_new_amount(max(0, old_pos_dirt.amount-smeared_dirt))
-                                if new_pos_dirt := self[c.DIRT].by_pos(agent.pos):
-                                    new_pos_dirt.set_new_amount(max(0, new_pos_dirt.amount + smeared_dirt))
-                                else:
-                                    if self[c.DIRT].spawn_dirt(agent.tile):
-                                        new_pos_dirt = self[c.DIRT].by_pos(agent.pos)
-                                        new_pos_dirt.set_new_amount(max(0, new_pos_dirt.amount + smeared_dirt))
+        # if smear_amount := self.dirt_prop.dirt_smear_amount:
+        #     for agent in self[c.AGENT]:
+        #         if agent.temp_valid and agent.last_pos != c.NO_POS:
+        #             if self._actions.is_moving_action(agent.temp_action):
+        #                 if old_pos_dirt := self[c.DIRT].by_pos(agent.last_pos):
+        #                     if smeared_dirt := round(old_pos_dirt.amount * smear_amount, 2):
+        #                         old_pos_dirt.set_new_amount(max(0, old_pos_dirt.amount-smeared_dirt))
+        #                         if new_pos_dirt := self[c.DIRT].by_pos(agent.pos):
+        #                             new_pos_dirt.set_new_amount(max(0, new_pos_dirt.amount + smeared_dirt))
+        #                         else:
+        #                             if self[c.DIRT].spawn_dirt(agent.tile):
+        #                                 new_pos_dirt = self[c.DIRT].by_pos(agent.pos)
+        #                                 new_pos_dirt.set_new_amount(max(0, new_pos_dirt.amount + smeared_dirt))
         if self._next_dirt_spawn < 0:
             pass  # No Dirt Spawn
         elif not self._next_dirt_spawn:
